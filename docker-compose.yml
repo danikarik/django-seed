@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  web:
+    restart: always
+    build: ./web/
+    env_file: .env
+    volumes:
+      - staticfiles:/data/web/staticfiles
+    expose:
+      - "8000"
+    command: /usr/bin/gunicorn core.wsgi:application -w 2 -b :8000
+
+  nginx:
+    restart: always
+    build: ./nginx/
+    volumes:
+      - staticfiles:/data/web/staticfiles
+    ports:
+      - "80:80"
+    links:
+      - web:web
+
+  redis:
+    restart: always
+    image: redis:latest
+    expose:
+      - "6379"
+
+volumes:
+  staticfiles:
