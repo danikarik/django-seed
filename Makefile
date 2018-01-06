@@ -12,7 +12,7 @@ done:
 .PHONY: install
 install: ## Install dependicies
 	$(info $(M) installing dependencies...)
-	$Q pip install -r req.txt
+	$Q pip install -r web/requirements.txt
 
 .PHONY: new-migration
 verify: ## Create migrations
